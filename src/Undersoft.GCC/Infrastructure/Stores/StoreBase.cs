@@ -16,12 +16,14 @@ public abstract class StoreBase<TStore, TContext> : DbStore<TStore, TContext>
     public virtual DbSet<Currency>? Currencies { get; set; }
     public virtual DbSet<CurrencyProvider>? CurrencyProviders { get; set; }
     public virtual DbSet<CurrencyRate>? CurrencyRates { get; set; }
+    public virtual DbSet<CurrencyRateTable>? CurrencyRateTable { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyMapping(new CurrencyMappings());
         modelBuilder.ApplyMapping(new CurrencyProviderMappings());
         modelBuilder.ApplyMapping(new CurrencyRateMappings());
+        modelBuilder.ApplyMapping(new CurrencyRateTableMappings());
 
         base.OnModelCreating(modelBuilder);
     }

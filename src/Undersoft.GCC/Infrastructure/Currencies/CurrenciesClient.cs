@@ -37,7 +37,7 @@ namespace Undersoft.GCC.Infrastructure.Currencies
                 }
                 catch (Exception ex)
                 {
-                    this.Failure<Netlog>("Getting data from http client failed");
+                    this.Failure<Netlog>("Getting data from http client failed", ex);
                 }
 
             }

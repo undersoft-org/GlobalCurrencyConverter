@@ -22,8 +22,6 @@ public class CurrencyRate : DataObject, IContract, IFormattable
 
     public virtual long? TableId { get; set; }
 
-    public virtual CurrencyRateTable? Table { get; set; }
-
     public virtual long? SourceCurrencyId { get; set; }
 
     public virtual Currency? SourceCurrency { get; set; }

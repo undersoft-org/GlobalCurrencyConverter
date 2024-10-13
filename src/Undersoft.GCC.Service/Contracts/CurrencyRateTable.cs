@@ -1,4 +1,5 @@
 using Undersoft.GCC.Domain.Entities;
+using Undersoft.SDK.Series;
 using Undersoft.SDK.Service.Data.Contract;
 using Undersoft.SDK.Service.Data.Entity;
 using Undersoft.SDK.Service.Data.Object;
@@ -25,5 +26,5 @@ public class CurrencyRateTable : DataObject, IContract
 
     public virtual int Decimals { get; set; } = 4;
 
-    public virtual EntitySet<CurrencyRate>? Rates { get; set; }
+    public virtual Listing<CurrencyRate>? Rates { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Undersoft.GCC.Infrastructure.Currencies;
+﻿using Undersoft.GCC.Domain.Entities;
+using Undersoft.GCC.Infrastructure.Currencies;
 using Undersoft.SDK.Logging;
 using Undersoft.SDK.Service;
 using Undersoft.SDK.Service.Data.Event;
@@ -13,14 +14,14 @@ namespace Undersoft.GCC.Service.API.Extensions
     {
         public static IServerHostSetup UseCurrenciesFeed(this IServerHostSetup setup)
         {
-            using (IServiceScope scope = setup.Manager.CreateSession())
+            using (IServiceScope scope = setup.Manager.CreateScope())
             {
                 try
                 {
                     var servicer = scope.ServiceProvider.GetRequiredService<IServicer>();
                     if (
                         !servicer
-                            .StoreSet<IReportStore, Domain.Entities.CurrencyProvider>()
+                            .StoreSet<IReportStore, CurrencyProvider>()
                             .Query.Any()
                     )
                     {
@@ -42,7 +43,7 @@ namespace Undersoft.GCC.Service.API.Extensions
                                 .Send(
                                     new CreateSet<
                                         IEntryStore,
-                                        Domain.Entities.Currency,
+                                        Currency,
                                         Contracts.Currency
                                     >(
                                         EventPublishMode.PropagateCommand,
@@ -57,7 +58,7 @@ namespace Undersoft.GCC.Service.API.Extensions
                                 .Send(
                                     new CreateSet<
                                         IEntryStore,
-                                        Domain.Entities.CurrencyProvider,
+                                        CurrencyProvider,
                                         Contracts.CurrencyProvider
                                     >(
                                         EventPublishMode.PropagateCommand,
@@ -74,8 +75,8 @@ namespace Undersoft.GCC.Service.API.Extensions
                 }
                 catch (Exception ex)
                 {
-                    "Currencies initial feed - unable to connect the database engine".Error<Applog>(
-                        null,
+                    "Currencies initial feed failed. See inner exception".Error<Applog>(
+                        ex.Message,
                         ex
                     );
                 }

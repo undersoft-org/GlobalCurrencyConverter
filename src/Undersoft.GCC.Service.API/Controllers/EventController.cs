@@ -14,7 +14,7 @@ namespace Undersoft.SSC.Service.Server.Controllers
         public EventController(IServicer ultimatr) : base(ultimatr) { }
     }
 
-    [Route($"{StoreRoutes.ApiEventRoute}/Event")]
+    [Route($"api/Event")]
     public class EventsController : ApiEventController<long, IEventStore, Event, Event>
     {
         public EventsController(IServicer ultimatr) : base(ultimatr) { }

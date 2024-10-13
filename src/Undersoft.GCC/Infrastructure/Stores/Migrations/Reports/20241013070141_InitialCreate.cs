@@ -19,9 +19,10 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 schema: "domain",
                 columns: table => new
                 {
+                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
                     Id = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
+                    OriginId = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeName = table.Column<string>(type: "TEXT", maxLength: 768, nullable: true),
                     Modified = table.Column<DateTime>(type: "timestamp", nullable: false),
                     Modifier = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
@@ -44,9 +45,10 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 schema: "domain",
                 columns: table => new
                 {
+                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
                     Id = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
+                    OriginId = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeName = table.Column<string>(type: "TEXT", maxLength: 768, nullable: true),
                     Modified = table.Column<DateTime>(type: "timestamp", nullable: false),
                     Modifier = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
@@ -75,12 +77,14 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 });
 
             migrationBuilder.CreateTable(
-                name: "CurrencyRateTable",
+                name: "CurrencyRateTables",
+                schema: "domain",
                 columns: table => new
                 {
+                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
                     Id = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
+                    OriginId = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeName = table.Column<string>(type: "TEXT", maxLength: 768, nullable: true),
                     Modified = table.Column<DateTime>(type: "timestamp", nullable: false),
                     Modifier = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
@@ -98,15 +102,15 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CurrencyRateTable", x => x.Id);
+                    table.PrimaryKey("PK_CurrencyRateTables", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CurrencyRateTable_Currencies_SourceCurrencyId",
+                        name: "FK_CurrencyRateTables_Currencies_SourceCurrencyId",
                         column: x => x.SourceCurrencyId,
                         principalSchema: "domain",
                         principalTable: "Currencies",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CurrencyRateTable_CurrencyProviders_ProviderId",
+                        name: "FK_CurrencyRateTables_CurrencyProviders_ProviderId",
                         column: x => x.ProviderId,
                         principalSchema: "domain",
                         principalTable: "CurrencyProviders",
@@ -118,9 +122,10 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 schema: "domain",
                 columns: table => new
                 {
+                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
                     Id = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CodeNo = table.Column<string>(type: "TEXT", maxLength: 32, nullable: true),
+                    OriginId = table.Column<long>(type: "INTEGER", nullable: false),
                     TypeName = table.Column<string>(type: "TEXT", maxLength: 768, nullable: true),
                     Modified = table.Column<DateTime>(type: "timestamp", nullable: false),
                     Modifier = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
@@ -162,9 +167,10 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                         principalTable: "CurrencyProviders",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CurrencyRates_CurrencyRateTable_TableId",
+                        name: "FK_CurrencyRates_CurrencyRateTables_TableId",
                         column: x => x.TableId,
-                        principalTable: "CurrencyRateTable",
+                        principalSchema: "domain",
+                        principalTable: "CurrencyRateTables",
                         principalColumn: "Id");
                 });
 
@@ -217,18 +223,21 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 column: "TargetCurrencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CurrencyRateTable_Index",
-                table: "CurrencyRateTable",
+                name: "IX_CurrencyRateTables_Index",
+                schema: "domain",
+                table: "CurrencyRateTables",
                 column: "Index");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CurrencyRateTable_ProviderId",
-                table: "CurrencyRateTable",
+                name: "IX_CurrencyRateTables_ProviderId",
+                schema: "domain",
+                table: "CurrencyRateTables",
                 column: "ProviderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CurrencyRateTable_SourceCurrencyId",
-                table: "CurrencyRateTable",
+                name: "IX_CurrencyRateTables_SourceCurrencyId",
+                schema: "domain",
+                table: "CurrencyRateTables",
                 column: "SourceCurrencyId");
         }
 
@@ -240,7 +249,8 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
                 schema: "domain");
 
             migrationBuilder.DropTable(
-                name: "CurrencyRateTable");
+                name: "CurrencyRateTables",
+                schema: "domain");
 
             migrationBuilder.DropTable(
                 name: "CurrencyProviders",

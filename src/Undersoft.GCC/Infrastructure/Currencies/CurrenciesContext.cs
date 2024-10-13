@@ -52,7 +52,7 @@ public abstract class CurrenciesContext : ICurrenciesContext
         if (!sizes.Any() || stream == null)
             return [];
 
-        var currencies = _adapter.ReadCurrencies(stream, sizes).Commit();
+        var currencies = _adapter.ReadCurrencies(stream, sizes).ToListing();
 
         return currencies;
     }
@@ -92,7 +92,7 @@ public abstract class CurrenciesContext : ICurrenciesContext
         if (!sizes.Any() || stream == null)
             return []!;
 
-        var rates = _adapter!.ReadCurrencyRates(stream, sizes).Commit();
+        var rates = _adapter!.ReadCurrencyRates(stream, sizes).ToListing();
 
         return rates;
     }

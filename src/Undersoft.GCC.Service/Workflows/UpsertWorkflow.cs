@@ -15,51 +15,46 @@ namespace Undersoft.GCC.Service.API.Workflows
         {
             _servicer = servicer;
             _context = _servicer.GetService<T>();
-            ConfigureWork(this);
-            ConfigureFlow(this);
+            Configure();
         }
 
-        public override void ConfigureWork(Workflow workflow)
+        public override void ConfigureWork()
         {
-            workflow
-                .Aspect<T>()
+            Aspect<T>()
                     .AddWork(_context, c => c.GetAllRates)
                     .AddWork(_context, c => c.GetCurrencies)
                     .AddWork(_context, c => c.GetLatestRates)
                 .Allocate(3);
 
-            workflow
-                .Aspect<UpsertCommands>()
+            Aspect<UpsertCommands>()
                     .AddWork<UpsertCommands>(a => a.UpsertCurrencies, _servicer)
                     .AddWork<UpsertCommands>(a => a.UpsertAllRates, _servicer)
                     .AddWork<UpsertCommands>(a => a.UpsertLatestRates, _servicer)
                 .Allocate(3);
         }
 
-        public override void ConfigureFlow(Workflow workflow)
+        public override void ConfigureFlow()
         {
-            workflow
-                .Aspect<T>()
-                    .Work<T>(_context, w => w.GetCurrencies)
+            Aspect<T>()
+                    .Work(_context, w => w.GetCurrencies)
                         .FlowTo<UpsertCommands>(a => a.UpsertCurrencies)
-
-                    .Work<T>(_context, w => w.GetAllRates)
+                    .Work(_context, w => w.GetAllRates)
                         .FlowTo<UpsertCommands>(a => a.UpsertAllRates)
-
-                    .Work<T>(_context, w => w.GetLatestRates)
+                    .Work(_context, w => w.GetLatestRates)
                         .FlowTo<UpsertCommands>(a => a.UpsertLatestRates);
         }
 
-        public void Start(T target, Func<T, Delegate> method, params object[] args)
+        public override void Execute(params object[] args)
         {
-            this.Aspect<T>().Work(target, method).Start(args);
+            Aspect<T>()
+                .Work(_context, w => w.GetCurrencies).Post()
+                .Work(_context, w => w.GetLatestRates).Post()
+                .Work(_context, w => w.GetAllRates).Post();
         }
 
         public async Task Execute(IJobExecutionContext context)
-        {
-            Start(_context, w => w.GetCurrencies);
-            Start(_context, w => w.GetLatestRates);
-            Start(_context, w => w.GetAllRates);
+        {            
+            Execute();
 
             await Task.CompletedTask;
         }

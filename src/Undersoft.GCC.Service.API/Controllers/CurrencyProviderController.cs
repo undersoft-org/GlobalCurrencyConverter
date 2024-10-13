@@ -22,7 +22,7 @@ namespace Undersoft.GCC.Service.API.Controllers
             : base(servicer) { }
     }
 
-    [Route($"{StoreRoutes.ApiDataRoute}/CurrencyProvider")]
+    [Route($"api/data/CurrencyProvider")]
     public class CurrencyProvidersController
         : ApiCqrsController<
             long,

@@ -8,21 +8,17 @@ using Undersoft.GCC.Infrastructure.Stores;
 
 #nullable disable
 
-namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
+namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Reports
 {
-    [DbContext(typeof(EntryStore))]
-    [Migration("20240731215747_InitialCreate")]
+    [DbContext(typeof(ReportStore))]
+    [Migration("20241013070141_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
             modelBuilder.Entity("Undersoft.GCC.Domain.Entities.Currency", b =>
                 {
@@ -34,16 +30,16 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                         .IsConcurrencyToken()
                         .HasMaxLength(32)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(0);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(7);
 
                     b.Property<string>("Creator")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(9);
+                        .HasColumnOrder(8);
 
                     b.Property<string>("CurrencyCode")
                         .HasColumnType("TEXT");
@@ -51,7 +47,7 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<int>("Index")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnOrder(10);
+                        .HasColumnOrder(9);
 
                     b.Property<bool>("IsDecimal")
                         .HasColumnType("INTEGER");
@@ -59,19 +55,23 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<string>("Label")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(10);
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(5);
 
                     b.Property<string>("Modifier")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("OriginId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(3);
 
                     b.Property<string>("Symbol")
                         .HasColumnType("TEXT");
@@ -83,7 +83,7 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<string>("TypeName")
                         .HasMaxLength(768)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(4);
 
                     b.HasKey("Id");
 
@@ -108,16 +108,16 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                         .IsConcurrencyToken()
                         .HasMaxLength(32)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(0);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(7);
 
                     b.Property<string>("Creator")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(9);
+                        .HasColumnOrder(8);
 
                     b.Property<string>("FullName")
                         .HasColumnType("TEXT");
@@ -128,24 +128,28 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<int>("Index")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnOrder(10);
+                        .HasColumnOrder(9);
 
                     b.Property<string>("Label")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(10);
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(5);
 
                     b.Property<string>("Modifier")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("OriginId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(3);
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
@@ -157,7 +161,7 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<string>("TypeName")
                         .HasMaxLength(768)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(4);
 
                     b.Property<int>("UpdateHour")
                         .HasColumnType("INTEGER");
@@ -184,16 +188,16 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                         .IsConcurrencyToken()
                         .HasMaxLength(32)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(0);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(7);
 
                     b.Property<string>("Creator")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(9);
+                        .HasColumnOrder(8);
 
                     b.Property<int>("Decimals")
                         .HasColumnType("INTEGER");
@@ -201,24 +205,28 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<int>("Index")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnOrder(10);
+                        .HasColumnOrder(9);
 
                     b.Property<string>("Label")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(10);
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(5);
 
                     b.Property<string>("Modifier")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("OriginId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(3);
 
                     b.Property<long?>("ProviderId")
                         .HasColumnType("INTEGER");
@@ -254,7 +262,7 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<string>("TypeName")
                         .HasMaxLength(768)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(4);
 
                     b.HasKey("Id");
 
@@ -281,16 +289,16 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                         .IsConcurrencyToken()
                         .HasMaxLength(32)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(0);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(7);
 
                     b.Property<string>("Creator")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(9);
+                        .HasColumnOrder(8);
 
                     b.Property<int>("Decimals")
                         .HasColumnType("INTEGER");
@@ -298,24 +306,28 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<int>("Index")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnOrder(10);
+                        .HasColumnOrder(9);
 
                     b.Property<string>("Label")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(10);
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("timestamp")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(5);
 
                     b.Property<string>("Modifier")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<long>("OriginId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(3);
 
                     b.Property<long?>("ProviderId")
                         .HasColumnType("INTEGER");
@@ -339,7 +351,7 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
                     b.Property<string>("TypeName")
                         .HasMaxLength(768)
                         .HasColumnType("TEXT")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(4);
 
                     b.HasKey("Id");
 
@@ -349,7 +361,7 @@ namespace Undersoft.GCC.Infrastructure.Stores.Migrations.Entries
 
                     b.HasIndex("SourceCurrencyId");
 
-                    b.ToTable("CurrencyRateTable");
+                    b.ToTable("CurrencyRateTables", "domain");
                 });
 
             modelBuilder.Entity("Undersoft.GCC.Domain.Entities.CurrencyProvider", b =>

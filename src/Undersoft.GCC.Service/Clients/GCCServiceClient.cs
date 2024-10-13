@@ -4,7 +4,7 @@ using Undersoft.SDK.Service.Data.Store;
 
 namespace Undersoft.GCC.Service.Clients;
 
-public class GCCServiceClient : OpenDataClient<IDataStore>
+public class GCCServiceClient : DataClient<IDataStore>
 {
     public GCCServiceClient(Uri serviceUri) : base(serviceUri) { }
 

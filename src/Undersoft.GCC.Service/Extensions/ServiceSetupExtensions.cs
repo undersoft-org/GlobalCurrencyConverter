@@ -19,6 +19,7 @@ namespace Undersoft.GCC.Service.Extensions
         public static IServiceSetup AddCurrencyContexts(this IServiceSetup services)
         {
             var options = new CurrenciesOptions();
+            var registry = services.Manager.Registry;
             services.Manager.Configuration.Bind("Currencies", options);
             if (options.Providers == null || !options.Providers.Any())
             {
@@ -26,7 +27,7 @@ namespace Undersoft.GCC.Service.Extensions
                 return services;
             }
 
-            services.Manager.Registry.AddObject(options);
+            registry.AddObject(options);
 
             var contextRegistry = new Registry<CurrenciesContext>();
 
@@ -40,7 +41,7 @@ namespace Undersoft.GCC.Service.Extensions
 
                 if (contextType == null)
                 {
-                    provider.Info<Servicelog>("Unable to find provider _context type", contextTypeName);
+                    provider.Info<Servicelog>("Unable to find provider's context type", contextTypeName);
                     continue;
                 }
 
@@ -54,21 +55,22 @@ namespace Undersoft.GCC.Service.Extensions
 
                 contextRegistry.Add(context.GetProvider().Name, context);
 
-                services.Manager.Registry.AddObject(contextType, context);
-                services.Manager.Registry.AddObject(contextOptionsType, contextOptions);
-                services.Manager.Registry.AddObject(contextFactoryType, contextFactory);
+                registry.AddObject(contextType, context);
+                registry.AddObject(contextOptionsType, contextOptions);
+                registry.AddObject(contextFactoryType, contextFactory);
             }
 
-            services.Manager.Registry.AddObject<ISeries<CurrenciesContext>>(contextRegistry);
+            registry.AddObject<ISeries<CurrenciesContext>>(contextRegistry);
 
             return services;
         }
 
         public static IServiceSetup AddCurrencyWorkflows(this IServiceSetup services)
         {
-            services.Manager.Registry.AddObject<UpsertWorkflow<NBPCurrenciesContext>>();
-            services.Manager.Registry.AddObject<UpsertWorkflow<ECBCurrenciesContext>>();
-            services.Manager.Registry.AddObject<UpsertWorkflow<FrankfurterCurrenciesContext>>();
+            var registry = services.Manager.Registry;
+            registry.AddObject<UpsertWorkflow<NBPCurrenciesContext>>();
+            registry.AddObject<UpsertWorkflow<ECBCurrenciesContext>>();
+            registry.AddObject<UpsertWorkflow<FrankfurterCurrenciesContext>>();
 
             return services;
         }
