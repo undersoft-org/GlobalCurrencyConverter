@@ -1,1 +1,1 @@
-# GCC
+# Global Currency Converter
